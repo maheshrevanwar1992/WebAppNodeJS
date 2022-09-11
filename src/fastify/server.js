@@ -23,6 +23,18 @@ const users = require('./routes/users');
 // app.use('/users', users); express way
 app.register(users, { prefix: '/users' });
 
+
+// 4. Hooks
+app.addHook('onRequest',(req, res, done)=>{
+  console.log(`request received: ${JSON.stringify(req.body)}`);
+  done();
+});
+
+app.addHook('preValidation',(req, res, done)=>{
+  console.log(`request received: ${JSON.stringify(req.body)}`);
+  done();
+})
+
 app.listen(port,()=>{
   console.log(`server listening on ${ port }`);
 });
