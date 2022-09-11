@@ -35,7 +35,12 @@ app.addHook('preValidation',(req, res, done)=>{
   done();
 })
 
-app.listen(port,()=>{
-  console.log(`server listening on ${ port }`);
+app.listen({ port }, function(err, address) {
+  if (err) {
+    app.log.error(err)
+    process.exit(1)
+  }
+  // Server is now listening on ${address}
+  console.log(`server listening on ${ port } ${ address }`);
 });
 
