@@ -58,7 +58,7 @@ app.get('/with-middleware', (req, res) => {
 });
 
 
-// 10. render static html
+// 10. render static html - TODO: Need to check : not working
 app.set('view engine', 'ejs');
 app.get('/html', (req, res) => {
   res.render('sample');
