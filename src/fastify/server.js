@@ -4,6 +4,38 @@ const app = fastify({
   logger: true
 });
 
+
+/*
+  1. if we do pass any auth then error will be bad authorization header
+  2. if user and password is wrong then below error message will be returned
+  3. authenticate: true is required -> it will add WWW-Authenticate header
+      using that browser can detect user and pass is required
+ */
+/* uncomment this code to use basic authentication
+function validate (username, password, req, reply, done) {
+  if (username === 'admin' && password === 'Nutanix.123') {
+    done();
+  } else {
+    done(new Error('username or password is incorrect'));
+  }
+}
+
+app.register(require('@fastify/basic-auth'), { validate, authenticate: true })
+  .after(() => {
+    app.addHook('onRequest', app.basicAuth)
+  });
+
+*/
+
+// this adds swagger support
+app.register(require('@fastify/swagger'), {
+  exposeRoute: true,
+  routePrefix: '/docs',
+  swagger: {
+    info: { title: 'user-api' }
+  }
+});
+
 // 1. no change - just res is called reply in fastify world, but it will not make any diff due to function arguments
 app.get('/',(req, res)=>{
   res.send('fastify initial page');
